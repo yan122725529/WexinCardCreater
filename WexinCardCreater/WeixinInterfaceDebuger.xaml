@@ -7,6 +7,7 @@
         Title="微信接口调试工具"
         Width="800"
         Height="600"
+        Loaded="WeixinInterfaceDebuger_OnLoaded"
         mc:Ignorable="d">
     <Grid>
         <Grid>
@@ -103,9 +104,19 @@
             <Border Grid.Row="2"
                     Margin="12,0"
                     Background="LightGray">
-                <TextBlock Margin="12,0"
-                           VerticalAlignment="Center"
-                           Text="请求数据" />
+
+                <DockPanel LastChildFill="False">
+                    <TextBlock Margin="12"
+                               VerticalAlignment="Center"
+                               Text="请求数据" />
+
+                    <Button VerticalAlignment="Center"
+                            Click="ButtonBase_OnClick"
+                            Content="读取文件" />
+                </DockPanel>
+
+
+
 
 
             </Border>

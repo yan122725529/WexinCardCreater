@@ -73,6 +73,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -105,6 +106,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Http\HttpHelper.cs" />
+    <Compile Include="Setting\AppSetting.cs" />
+    <Compile Include="Setting\ConfigrationUtil.cs" />
     <Compile Include="WeixinInterfaceDebuger.xaml.cs">
       <DependentUpon>WeixinInterfaceDebuger.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -150,6 +153,11 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="AppSetting.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

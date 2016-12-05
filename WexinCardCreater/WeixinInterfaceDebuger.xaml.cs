@@ -1,8 +1,13 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
+using System.IO;
 using System.Runtime.CompilerServices;
+using System.Text;
 using System.Windows;
+using Microsoft.Win32;
 using Senparc.Weixin.MP.Containers;
 using WexinCardCreater.Http;
+using WexinCardCreater.Setting;
 
 namespace WexinCardCreater
 {
@@ -140,5 +145,50 @@ namespace WexinCardCreater
                 ResponseBody = responsejson;
             }
         }
+
+        private void WeixinInterfaceDebuger_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            this.AppId = AppSetting.GetAppSetting().Appid;
+            this.AppSecret = AppSetting.GetAppSetting().AppSecret;
+        }
+
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog fileDialog = new OpenFileDialog
+            {
+                Multiselect = true,
+                Title = "请选择文件",
+                Filter = "所有文件(*.*)|*.*"
+            };
+           
+            if (fileDialog.ShowDialog()??false)
+            {
+                try
+                {
+                    using (var sr = new StreamReader(fileDialog.FileName, Encoding.UTF8))
+                    {
+                       
+                        StringBuilder build=new StringBuilder();
+                        string line;
+                        while ((line = sr.ReadLine()) != null)
+                        {
+                            build.AppendLine(line);
+                        }
+                        RequestBody = build.ToString();
+                        sr.Close();
+                    }
+               
+                }
+                catch (IOException ex)
+                {
+                  
+                }
+            }
+
+            
+        }
+
+
+
     }
 }
