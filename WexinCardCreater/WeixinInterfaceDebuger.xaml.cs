@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
@@ -23,6 +23,7 @@ namespace WexinCardCreater
         private string _requestType;
         private string _requestUrl;
         private string _responseBody;
+        private ObservableCollection<string> _urlList = new ObservableCollection<string>();
 
         public WeixinInterfaceDebuger()
         {
@@ -105,6 +106,16 @@ namespace WexinCardCreater
             }
         }
 
+        public ObservableCollection<string> UrlList
+        {
+            get { return _urlList; }
+            set
+            {
+                _urlList = value;
+                OnPropertyChanged();
+            }
+        }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -133,62 +144,53 @@ namespace WexinCardCreater
                 MessageBox.Show(this, "请获取token后查询");
                 return;
             }
-            var realurl = string.Format(RequestUrl.Contains("?") ? @"{0}&access_token={1}" : @"{0}?access_token={1}", RequestUrl, CurrentToken);
+            var realurl = string.Format(RequestUrl.Contains("?") ? @"{0}&access_token={1}" : @"{0}?access_token={1}",
+                RequestUrl, CurrentToken);
             if (RequestType.ToUpper() == "POST")
             {
                 var responsejson = HttpHelper.HttpRequestPost(realurl, RequestBody);
                 ResponseBody = responsejson;
             }
-            if (RequestType.ToUpper() == "GET") 
+            if (RequestType.ToUpper() == "GET")
             {
                 var responsejson = HttpHelper.HttpRequestGet(realurl);
                 ResponseBody = responsejson;
             }
+
+            UrlList.Add(RequestUrl);
         }
 
         private void WeixinInterfaceDebuger_OnLoaded(object sender, RoutedEventArgs e)
         {
-            this.AppId = AppSetting.GetAppSetting().Appid;
-            this.AppSecret = AppSetting.GetAppSetting().AppSecret;
+            AppId = AppSetting.GetAppSetting().Appid;
+            AppSecret = AppSetting.GetAppSetting().AppSecret;
         }
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog fileDialog = new OpenFileDialog
+            var fileDialog = new OpenFileDialog
             {
                 Multiselect = true,
                 Title = "请选择文件",
                 Filter = "所有文件(*.*)|*.*"
             };
-           
-            if (fileDialog.ShowDialog()??false)
-            {
+
+            if (fileDialog.ShowDialog() ?? false)
                 try
                 {
                     using (var sr = new StreamReader(fileDialog.FileName, Encoding.UTF8))
                     {
-                       
-                        StringBuilder build=new StringBuilder();
+                        var build = new StringBuilder();
                         string line;
                         while ((line = sr.ReadLine()) != null)
-                        {
                             build.AppendLine(line);
-                        }
                         RequestBody = build.ToString();
                         sr.Close();
                     }
-               
                 }
                 catch (IOException ex)
                 {
-                  
                 }
-            }
-
-            
         }
-
-
-
     }
 }

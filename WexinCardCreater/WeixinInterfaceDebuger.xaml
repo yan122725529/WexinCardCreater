@@ -94,6 +94,7 @@
                     <ComboBox Margin="12"
                               IsReadOnly="False"
                               IsEditable="True"
+                              ItemsSource="{Binding UrlList, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                               Text="{Binding RequestUrl, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" />
 
                 </DockPanel>
