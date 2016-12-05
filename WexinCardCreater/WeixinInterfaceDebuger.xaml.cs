@@ -134,7 +134,7 @@ namespace WexinCardCreater
                 var responsejson = HttpHelper.HttpRequestPost(realurl, RequestBody);
                 ResponseBody = responsejson;
             }
-            if (RequestType.ToUpper() != "GET") return;
+            if (RequestType.ToUpper() == "GET") 
             {
                 var responsejson = HttpHelper.HttpRequestGet(realurl);
                 ResponseBody = responsejson;
