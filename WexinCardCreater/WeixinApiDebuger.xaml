@@ -1,0 +1,243 @@
+﻿<Window x:Class="WexinCardCreater.WeixinApiDebuger"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:WexinCardCreater"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        Title="微信接口调试工具"
+        MinWidth="800"
+        MinHeight="600"
+        Loaded="WeixinApiDebuger_OnLoaded"
+        mc:Ignorable="d">
+
+    <Window.Resources>
+        <Style x:Key="CloseButton" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid Width="14"
+                              Height="14"
+                              Background="Transparent">
+                            <Ellipse x:Name="FocusEllipse"
+                                     Fill="#FFF13535"
+                                     Visibility="Collapsed" />
+                            <Path x:Name="path"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"
+                                  Data="M0,0 L6,6 M6, 0 L0,6"
+                                  Stroke="#FF898888"
+                                  StrokeThickness="1" />
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal" />
+                                    <VisualState x:Name="MouseOver">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="FocusEllipse">
+                                                <DiscreteObjectKeyFrame KeyTime="0">
+                                                    <DiscreteObjectKeyFrame.Value>
+                                                        <Visibility>Visible</Visibility>
+                                                    </DiscreteObjectKeyFrame.Value>
+                                                </DiscreteObjectKeyFrame>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ColorAnimation Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)"
+                                                            Storyboard.TargetName="FocusEllipse"
+                                                            To="#FFDC3030"
+                                                            Duration="0" />
+                                            <ColorAnimation Storyboard.TargetProperty="(Shape.Stroke).(SolidColorBrush.Color)"
+                                                            Storyboard.TargetName="path"
+                                                            To="White"
+                                                            Duration="0" />
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Pressed">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="FocusEllipse">
+                                                <DiscreteObjectKeyFrame KeyTime="0">
+                                                    <DiscreteObjectKeyFrame.Value>
+                                                        <Visibility>Visible</Visibility>
+                                                    </DiscreteObjectKeyFrame.Value>
+                                                </DiscreteObjectKeyFrame>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ColorAnimation Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)"
+                                                            Storyboard.TargetName="FocusEllipse"
+                                                            To="Black"
+                                                            Duration="0" />
+                                            <ColorAnimation Storyboard.TargetProperty="(Shape.Stroke).(SolidColorBrush.Color)"
+                                                            Storyboard.TargetName="path"
+                                                            To="White"
+                                                            Duration="0" />
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Disabled" />
+                                </VisualStateGroup>
+                                <VisualStateGroup x:Name="FocusStates">
+                                    <VisualState x:Name="Focused" />
+                                    <VisualState x:Name="Unfocused" />
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="AddButton" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid Width="14"
+                              Height="14"
+                              Background="Transparent">
+                            <Ellipse x:Name="FocusEllipse"
+                                     Fill="#FFF13535"
+                                     Visibility="Collapsed" />
+                            <Path x:Name="path"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"
+                                  Data="M4,0 L4,8 M0, 4 L8,4"
+                                  Stroke="#FF898888"
+                                  StrokeThickness="1" />
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal" />
+                                    <VisualState x:Name="MouseOver">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="FocusEllipse">
+                                                <DiscreteObjectKeyFrame KeyTime="0">
+                                                    <DiscreteObjectKeyFrame.Value>
+                                                        <Visibility>Visible</Visibility>
+                                                    </DiscreteObjectKeyFrame.Value>
+                                                </DiscreteObjectKeyFrame>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ColorAnimation Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)"
+                                                            Storyboard.TargetName="FocusEllipse"
+                                                            To="#FF1CC81F"
+                                                            Duration="0" />
+                                            <ColorAnimation Storyboard.TargetProperty="(Shape.Stroke).(SolidColorBrush.Color)"
+                                                            Storyboard.TargetName="path"
+                                                            To="White"
+                                                            Duration="0" />
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Pressed">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="FocusEllipse">
+                                                <DiscreteObjectKeyFrame KeyTime="0">
+                                                    <DiscreteObjectKeyFrame.Value>
+                                                        <Visibility>Visible</Visibility>
+                                                    </DiscreteObjectKeyFrame.Value>
+                                                </DiscreteObjectKeyFrame>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ColorAnimation Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)"
+                                                            Storyboard.TargetName="FocusEllipse"
+                                                            To="Black"
+                                                            Duration="0" />
+                                            <ColorAnimation Storyboard.TargetProperty="(Shape.Stroke).(SolidColorBrush.Color)"
+                                                            Storyboard.TargetName="path"
+                                                            To="White"
+                                                            Duration="0" />
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Disabled" />
+                                </VisualStateGroup>
+                                <VisualStateGroup x:Name="FocusStates">
+                                    <VisualState x:Name="Focused" />
+                                    <VisualState x:Name="Unfocused" />
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <DataTemplate x:Key="TabItemTemplate">
+            <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                <TextBlock Text="调试" />
+                <Button Margin="10,0,0,0"
+                        Click="CloseButton_OnClick"
+                        Style="{StaticResource CloseButton}"
+                        ToolTipService.ToolTip="Remove item" />
+                <Button Click="AddButton_OnClick"
+                        ToolTipService.ToolTip="Add new item"
+                        Style="{StaticResource AddButton}" />
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="ContentTemplate">
+            <ContentControl x:Name="PopupContent"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            Background="White">
+
+                <local:WeixinRequestCreater />
+            </ContentControl>
+
+        </DataTemplate>
+        <Style TargetType="TabItem">
+            <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+
+            </Grid.RowDefinitions>
+            <!--  微信APP信息  -->
+            <Border Grid.Row="0"
+                    Margin="12,0"
+                    Background="AntiqueWhite">
+                <StackPanel Orientation="Vertical">
+                    <DockPanel LastChildFill="True">
+                        <Button Margin="12,0"
+                                VerticalAlignment="Center"
+                                Click="TokenButton_OnClick"
+                                Content="获取Token"
+                                DockPanel.Dock="Left" />
+                        <TextBlock VerticalAlignment="Center"
+                                   DockPanel.Dock="Left"
+                                   Text="AppID" />
+                        <TextBox Width="150"
+                                 Margin="12"
+                                 VerticalAlignment="Center"
+                                 DockPanel.Dock="Left"
+                                 Text="{Binding AppId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                        <TextBlock VerticalAlignment="Center"
+                                   DockPanel.Dock="Left"
+                                   Text="AppSecret" />
+                        <TextBox Margin="12"
+                                 HorizontalAlignment="Stretch"
+                                 VerticalAlignment="Center"
+                                 DockPanel.Dock="Left"
+                                 Text="{Binding AppSecret, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+
+                    </DockPanel>
+                    <DockPanel>
+                        <TextBlock Margin="12,0"
+                                   VerticalAlignment="Center"
+                                   DockPanel.Dock="Left"
+                                   Text="当前token：" />
+
+
+                        <TextBlock VerticalAlignment="Center"
+                                   DockPanel.Dock="Left"
+                                   TextWrapping="WrapWithOverflow"
+                                   Foreground="Blue"
+                                   Text="{Binding CurrentToken, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                    </DockPanel>
+                </StackPanel>
+
+
+            </Border>
+            <Border Grid.Row="1" Background="AntiqueWhite">
+                <TabControl x:Name="TabControl"
+                            Margin="12"
+                            ItemsSource="{Binding Tabs}"
+                            SelectionChanged="Selector_OnSelectionChanged"
+                            ContentTemplate="{StaticResource ContentTemplate}"
+                            ItemTemplate="{StaticResource TabItemTemplate}" />
+            </Border>
+        </Grid>
+    </Grid>
+</Window>

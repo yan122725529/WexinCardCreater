@@ -50,6 +50,7 @@ namespace WexinCardCreater.Setting
         public string AppSecret { get; set; }
         //wxc62e07a280523aac
         public string Appid { get; set; }
+
         #endregion
     }
 }
